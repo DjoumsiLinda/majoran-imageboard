@@ -1,0 +1,92 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    background-color: aqua;
+}
+#fiel {
+    margin-left: 50px;
+    font-size: 25px;
+    padding: 15px 0;
+    display: grid;
+    grid-template-columns: 120px 200px 1fr;
+}
+#fiel label {
+    width: 100%;
+}
+#fiel input {
+    height: 30px;
+    width: 200px;
+}
+#field,
+button {
+    margin-top: 10px;
+    margin-left: 50px;
+    font-size: 25px;
+}
+#file {
+    font-size: 15px;
+    margin-left: -4px;
+    background-color: grey;
+    cursor: pointer;
+}
+#upload {
+    cursor: pointer;
+    margin-top: 25px;
+    font-size: 20px;
+    border-radius: 15%;
+    height: 30px;
+    text-align: center;
+    background-color: green;
+}
+.im {
+    display: flex;
+    flex-direction: column;
+}
+#imageboards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+#imageboard {
+    height: 400px;
+    width: 400px;
+    border: 3px solid black;
+    text-align: center;
+    border-radius: 2%;
+    margin-bottom: 50px;
+}
+#imageboard img {
+    margin-top: 2px;
+    height: 90%;
+    width: 98%;
+    object-fit: cover;
+    margin-bottom: 0px;
+    border-radius: 2%;
+}
+#imageboard #title {
+    font-size: 25px;
+    margin-top: 0px;
+    text-align: left;
+    margin-left: 2%;
+}
+#more {
+    cursor: pointer;
+    background-color: gold;
+    height: 50px;
+    margin-top: 50px;
+    margin-left: 50%;
+}
+#col {
+    display: flex;
+    flex-direction: row;
+}
+#file:hover,
+#upload:hover {
+    font-size: 30px;
+    height: 50px;
+}
+input:focus {
+    border: hotpink;
+}

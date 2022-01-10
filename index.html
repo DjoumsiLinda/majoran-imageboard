@@ -2,9 +2,57 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Image Board</title>
 </head>
 <body>
-    <script src="/js/app.js" type="module" crossorigin="use-credentials"></script>
+    <div id="server">
+        <div class="herun">
+            <h1>Add an Image Now!</h1>
+            <form @submit="addImage">
+                <div id="fiel">
+                    <label>Tilte </label>
+                    <input type="title" v-model="title" >    
+                </div>
+                <div id="fiel">
+                    <label>Decription </label>
+                    <input type="description" v-model="description">    
+                </div>
+                <div id="fiel">
+                    <label>Username </label>
+                    <input type="username" v-model="username">    
+                </div>    
+                <div id="field">
+                    <label>File </label>
+                    <button type="file" id="file">Choose File</button>
+                    <input type="file" accept="image/*" name="Choose">
+                    <label v-if="file === true"> File 😃</label>
+                    <label v-else> Not File Choose</label>
+                </div>
+                <button type="submit" id="upload">Upload</button> 
+            </form>
+        </div>
+        <div class="im">
+            <h1>Latest Images</h1>
+            <div id="imageboards">
+                <div id="imageboard">
+                    <img src="">
+                    <p id="title">Test image</p>
+                </div> 
+                <div v-for="image in images" id="imageboard">
+                    <img :src="image.url">
+                    <p id="title">{{image.title}}</p>
+                </div>  
+                <div id="imageboard">
+                    <img src="">
+                    <p id="title">Test image</p>
+                </div>   
+            </div>  
+            <div>
+                <button type="more" id="more">More Images</button> 
+            </div>  
+        </div>
+    </div>
+    <script src="/js/client.js" type="module" crossorigin="use-credentials"></script>
 </body>
 </html>

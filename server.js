@@ -1,12 +1,23 @@
-const express = require('express');
-const app = express();
+const express = require("express");
+const server = express();
+const db = require("./db.js");
 
-app.use(express.static('./public'));
+server.use((req, res, next) => {
+    console.log("📢", req.method, req.url, req.session);
+    next();
+});
 
-app.use(express.json());
+server.use(express.static("./public"));
 
-app.get('*', (req, res) => {
+server.use(express.json());
+
+server.get("/images", (req, res) => {
+    db.getImages().then((results) => {
+        res.json(results.rows);
+    });
+});
+server.get("*", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 });
 
-app.listen(8080, () => console.log(`I'm listening.`));
+server.listen(8080, () => console.log(`I'm listening. http://localhost:8080`));
