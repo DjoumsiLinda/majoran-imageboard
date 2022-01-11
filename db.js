@@ -17,3 +17,12 @@ const db = spicedPg(connetionString);
 module.exports.getImages = () => {
     return db.query(`SELECT title, url FROM images;`);
 };
+
+module.exports.addImage = (obj) => {
+    return db.query(
+        `INSERT INTO images (url, username, title, description)
+            VALUES($1, $2, $3, $4)
+            RETURNING id;`,
+        [obj.url, obj.username, obj.title, obj.description]
+    );
+};

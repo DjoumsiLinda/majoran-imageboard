@@ -9,25 +9,22 @@
     <div id="server">
         <div class="herun">
             <h1>Add an Image Now!</h1>
-            <form @submit="addImage">
+            <form @submit.prevent="addImage">
                 <div id="fiel">
                     <label>Tilte </label>
-                    <input type="title" v-model="title" >    
+                    <input type="text" name="title" v-model="title" >    
                 </div>
                 <div id="fiel">
                     <label>Decription </label>
-                    <input type="description" v-model="description">    
+                    <input type="text" name="description" v-model="description">    
                 </div>
                 <div id="fiel">
                     <label>Username </label>
-                    <input type="username" v-model="username">    
+                    <input type="text" name="username" v-model="username">    
                 </div>    
                 <div id="field">
                     <label>File </label>
-                    <button type="file" id="file">Choose File</button>
-                    <input type="file" accept="image/*" name="Choose">
-                    <label v-if="file === true"> File 😃</label>
-                    <label v-else> Not File Choose</label>
+                    <input type="file" accept="image/*" name="Choose" @change="addFile">
                 </div>
                 <button type="submit" id="upload">Upload</button> 
             </form>
@@ -40,12 +37,10 @@
                     <p id="title">Test image</p>
                 </div> 
                 <div v-for="image in images" id="imageboard">
-                    <img :src="image.url">
-                    <p id="title">{{image.title}}</p>
-                </div>  
-                <div id="imageboard">
-                    <img src="">
-                    <p id="title">Test image</p>
+                    <a href="/components" @click="clickImage">
+                        <img :src="image.url">
+                        <p id="title">{{image.title}}</p>    
+                    </a>
                 </div>   
             </div>  
             <div>

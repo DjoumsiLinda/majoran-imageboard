@@ -24,12 +24,6 @@ button {
     margin-left: 50px;
     font-size: 25px;
 }
-#file {
-    font-size: 15px;
-    margin-left: -4px;
-    background-color: grey;
-    cursor: pointer;
-}
 #upload {
     cursor: pointer;
     margin-top: 25px;
