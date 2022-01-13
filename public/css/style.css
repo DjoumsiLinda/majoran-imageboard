@@ -2,7 +2,14 @@
     box-sizing: border-box;
 }
 body {
-    background-color: aqua;
+    background-color: darkgray;
+}
+#server {
+    margin-left: 10px;
+}
+.im {
+    display: flex;
+    flex-direction: column;
 }
 #fiel {
     margin-left: 50px;
@@ -33,10 +40,7 @@ button {
     text-align: center;
     background-color: green;
 }
-.im {
-    display: flex;
-    flex-direction: column;
-}
+
 #imageboards {
     display: flex;
     flex-direction: row;
@@ -46,18 +50,18 @@ button {
 #imageboard {
     height: 400px;
     width: 400px;
-    border: 3px solid black;
     text-align: center;
     border-radius: 2%;
     margin-bottom: 50px;
+    background-color: chartreuse;
+    border-radius: 2%;
 }
 #imageboard img {
-    margin-top: 2px;
+    border-radius: 2%;
     height: 90%;
-    width: 98%;
+    width: 100%;
     object-fit: cover;
     margin-bottom: 0px;
-    border-radius: 2%;
 }
 #imageboard #title {
     font-size: 25px;
@@ -65,12 +69,16 @@ button {
     text-align: left;
     margin-left: 2%;
 }
+#cen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 #more {
     cursor: pointer;
     background-color: gold;
     height: 50px;
-    margin-top: 50px;
-    margin-left: 50%;
 }
 #col {
     display: flex;
