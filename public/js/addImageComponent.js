@@ -50,9 +50,13 @@ export const addImageComponent = {
                     return (this.notempty = true);
                 }
                 if (
-                    !this.url.toLowerCase().endsWith("jpe") ||
+                    !this.url.toLowerCase().endsWith("jpe") &&
                     !this.url.toLowerCase().endsWith("jpg")
                 ) {
+                    console.log(
+                        "Not jpe and not Jpg",
+                        this.url.toLowerCase().endsWith("jpg")
+                    );
                     return (this.urlfehler = true);
                 }
                 const formData = new FormData();
