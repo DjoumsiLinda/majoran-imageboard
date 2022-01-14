@@ -9,13 +9,8 @@ export const modalComponent = {
                 <div id="info">
                     <h3>{{image.title}}</h3>
                     <p>{{image.description}}</p>
-                    <p>Uploaded on {{image.created_at}}</p>
-                    <p>Uploaded on {{new Date(image.created_at).getDate()}}/
-                    {{(new Date(image.created_at).getMonth() + 1).toString().padStart(2, "0")}}/
-                    {{new Date(image.created_at).getFullYear()}} ---
-                    {{new Date(image.created_at).getHours()-1}}:
-                    {{new Date(image.created_at).getMinutes()}}:
-                    {{new Date(image.created_at).getSeconds()}}
+                    <p>Uploaded on {{new Date(image.created_at).getDate()}}/{{(new Date(image.created_at).getMonth() + 1).toString().padStart(2, "0")}}/{{new Date(image.created_at).getFullYear()}} 
+                    at {{new Date(image.created_at).getHours()-1}}:{{new Date(image.created_at).getMinutes().toString().padStart(2, "0")}}
                     </p>
                 </div>
             </div>
