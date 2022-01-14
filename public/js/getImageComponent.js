@@ -30,15 +30,31 @@ export const getImageComponent = {
                 this.$emit("images", data);
                 this.loadMoreButton(data);
             });
+        // browser url changed, e.g. because the user
+        // navigated back and forth with the browser history buttons
+        window.addEventListener("popstate", () => {
+            this.selectedImageId = location.pathname.slice(1);
+        });
     },
     data() {
-        return { selectedImageId: null, loadMore: false };
+        return { selectedImageId: location.pathname.slice(1), loadMore: false };
     },
     methods: {
-        handleselectedId(id) {
-            this.selectedImageId = id;
+        handleselectedId(imageId) {
+            // add image id to browser url
+            history.pushState({}, "", "/" + imageId);
+            this.selectedImageId = imageId;
         },
-        handleClose() {
+        handleClose(invalid = false) {
+            // remove image id from browser url
+            if (!invalid) {
+                // navigate to URL WITH adding an entry to the browser history
+                history.pushState({}, "", "/");
+            } else {
+                // navigate to URL WITHOUT adding an entry to the browser history
+                history.replaceState({}, "", "/");
+            }
+
             this.selectedImageId = null;
         },
         loadMoreImage() {

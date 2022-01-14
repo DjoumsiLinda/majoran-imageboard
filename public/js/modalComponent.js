@@ -4,7 +4,7 @@ export const modalComponent = {
     template: `
         <div class="modal">
             <div class="getImage">
-            <div class="image">
+            <div class="image"  v-if="image">
                 <img :src="image.url">
                 <div id="info">
                     <h3>{{image.title}}</h3>
@@ -24,7 +24,7 @@ export const modalComponent = {
     `,
     data() {
         return {
-            image: {},
+            image: null,
         };
     },
     mounted() {
@@ -33,13 +33,17 @@ export const modalComponent = {
             .then((res) => {
                 return res.json();
             })
-            .then((data) => {
-                this.image = data[0];
+            .then((image) => {
+                if (image[0]) {
+                    this.image = image[0];
+                } else {
+                    this.$emit("close", true);
+                }
             });
     },
     methods: {
         handleClick() {
-            this.$emit("close");
+            this.$emit("close", true);
         },
     },
     components: { "comment-component": commentComponent },

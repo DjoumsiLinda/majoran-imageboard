@@ -7,9 +7,11 @@ export const commentComponent = {
             <input type="text" name="username" v-model="username" placeholder="username">
             <button @click="handleClick">Submit</button>
             <div id="allComments">
-                <li v-for="comment in comments">
-                    {{comment.username}} has wrote "{{comment.comment}}" on {{comment.created_at}}
+                <li v-for="comment in comments" v-if="comments">
+                    {{comment.username}} has wrote "{{comment.comment}}" on {{new Date(comment.created_at).getDate()}}/{{(new Date(comment.created_at).getMonth() + 1).toString().padStart(2, "0")}}/{{new Date(comment.created_at).getFullYear()}} 
+                    at {{new Date(comment.created_at).getHours()-1}}:{{new Date(comment.created_at).getMinutes().toString().padStart(2, "0")}}
                 </li>
+                <p v-else> not comment </p>
             </div>
         </div>
     `,
@@ -30,12 +32,12 @@ export const commentComponent = {
                 if (data[0]) {
                     this.comments = data;
                 } else {
-                    const obj = [
+                    /*const obj = [
                         {
                             comment: "not comment",
                         },
                     ];
-                    this.comments = obj;
+                    this.comments = obj;*/
                 }
             });
     },

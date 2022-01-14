@@ -114,6 +114,7 @@ server.get("/comments/:id*", (req, res) => {
             res.sendStatus(500);
         });
 });
+
 server.get("*", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 });
