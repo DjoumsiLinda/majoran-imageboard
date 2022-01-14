@@ -1,6 +1,7 @@
 const aws = require("aws-sdk");
 const fs = require("fs");
 const { unlink } = require("fs").promises;
+const db = require("./db.js");
 
 let secrets;
 if (process.env.NODE_ENV == "production") {
@@ -33,6 +34,22 @@ module.exports.s3Uploader = (req, res, next) => {
         })
         .catch((err) => {
             console.log(err);
+            res.sendStatus(500);
+        });
+};
+
+module.exports.s3deleteUrl = (req, res, next) => {
+    db.getImageWithId(req.params.id)
+        .then((results) => {
+            var params = { Bucket: "spicedling", Key: results.rows[0].url };
+            s3.deleteObject(params, function (err, data) {
+                if (err) console.log(err, err.stack);
+                else console.log("succefull delete in s3", data);
+                next();
+            });
+        })
+        .catch((e) => {
+            console.log(e);
             res.sendStatus(500);
         });
 };

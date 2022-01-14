@@ -20,12 +20,14 @@ module.exports.getImages = () => {
         ) FROM images ORDER BY id DESC LIMIT 6;
     `);
 };
-
+module.exports.deleteImage = (id) => {
+    return db.query(`DELETE FROM images where id = $1;`, [id]);
+};
 module.exports.addImage = (obj) => {
     return db.query(
         `INSERT INTO images (url, username, title, description)
             VALUES($1, $2, $3, $4)
-            RETURNING id;`,
+            RETURNING *;`,
         [obj.url, obj.username, obj.title, obj.description]
     );
 };
@@ -54,4 +56,8 @@ module.exports.addcomment = (obj) => {
 
 module.exports.getCommentsWithId = (id) => {
     return db.query(`SELECT * FROM comments where image_id = $1;`, [id]);
+};
+
+module.exports.deleteComment = (id) => {
+    return db.query(`DELETE FROM comments where image_id = $1;`, [id]);
 };

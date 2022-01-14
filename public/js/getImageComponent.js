@@ -42,6 +42,7 @@ export const getImageComponent = {
     methods: {
         handleselectedId(imageId) {
             // add image id to browser url
+            console.log("You are click on:", imageId);
             history.pushState({}, "", "/" + imageId);
             this.selectedImageId = imageId;
         },

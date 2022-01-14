@@ -13,6 +13,8 @@ export const modalComponent = {
                     at {{new Date(image.created_at).getHours()-1}}:{{new Date(image.created_at).getMinutes().toString().padStart(2, "0")}}
                     </p>
                 </div>
+                <p id="notdeleteimage" v-if="nottodelete">Sorry, but you cannot delete this image! </p>
+                <button @click="deleteImage" id="deleteImage">Delete Image</button>
             </div>
             <div id="comment"> 
                 <button id="btx" @click="handleClick">X</button> 
@@ -25,6 +27,7 @@ export const modalComponent = {
     data() {
         return {
             image: null,
+            nottodelete: false,
         };
     },
     mounted() {
@@ -44,6 +47,21 @@ export const modalComponent = {
     methods: {
         handleClick() {
             this.$emit("close", true);
+        },
+        deleteImage() {
+            //die erste 3 bilder von DB sollte nicgt gelöscht werden
+            if (this.id <= 3) {
+                this.nottodelete = true;
+                return;
+            }
+            const path = "/delete/" + this.id;
+            fetch(path)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((rowCount) => {
+                    console.log("Image succeffulL Delete:", rowCount);
+                });
         },
     },
     components: { "comment-component": commentComponent },
