@@ -49,7 +49,7 @@ export const modalComponent = {
             this.$emit("close", true);
         },
         deleteImage() {
-            //die erste 3 bilder von DB sollte nicgt gelöscht werden
+            //die erste 3 bilder von DB sollte nicht gelöscht werden
             if (this.id <= 3) {
                 this.nottodelete = true;
                 return;
@@ -61,6 +61,7 @@ export const modalComponent = {
                 })
                 .then((rowCount) => {
                     console.log("Image succeffulL Delete:", rowCount);
+                    this.$emit("close", true, true);
                 });
         },
     },

@@ -1,6 +1,10 @@
 export const commentComponent = {
     props: ["id"],
     template: `
+        <head>
+            <meta charset="utf-8">
+            <link rel="stylesheet" href="/css/commentStyle.css">
+        </head>
         <div class="commentcom">
             <h3> Add a Comment! </h3>
             <textarea type="text" name="comment" v-model="comment" rows="10" cols="50" placeholder="Please write your comment here"></textarea> 
@@ -9,7 +13,7 @@ export const commentComponent = {
             <div id="allComments">
                 <li v-for="comment in comments" v-if="comments.length">
                     {{comment.username}} has wrote "{{comment.comment}}" on {{new Date(comment.created_at).getDate()}}/{{(new Date(comment.created_at).getMonth() + 1).toString().padStart(2, "0")}}/{{new Date(comment.created_at).getFullYear()}} 
-                    at {{new Date(comment.created_at).getHours()-1}}:{{new Date(comment.created_at).getMinutes().toString().padStart(2, "0")}}
+                    at {{new Date(comment.created_at).getHours()}}:{{new Date(comment.created_at).getMinutes().toString().padStart(2, "0")}}
                 </li>
                 <p v-else> not comment </p>
             </div>
@@ -29,15 +33,8 @@ export const commentComponent = {
                 return res.json();
             })
             .then((data) => {
-                if (data[0]) {
+                if (data) {
                     this.comments = data;
-                } else {
-                    /*const obj = [
-                        {
-                            comment: "not comment",
-                        },
-                    ];
-                    this.comments = obj;*/
                 }
             });
     },
@@ -50,7 +47,6 @@ export const commentComponent = {
                     username: this.username,
                     image_id: this.id,
                 };
-                console.log("------------", newComment);
                 //insert new comment
                 fetch("/comment", {
                     method: "POST",
@@ -63,8 +59,9 @@ export const commentComponent = {
                         return res.json();
                     })
                     .then((data) => {
-                        console.log("Insert comment in DB succefull thanks");
-                        this.comments.unshift(data);
+                        this.comments.unshift(data[0]);
+                        this.comment = "";
+                        this.username = "";
                     });
             }
         },

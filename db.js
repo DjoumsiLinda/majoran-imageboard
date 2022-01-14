@@ -49,7 +49,7 @@ module.exports.addcomment = (obj) => {
     return db.query(
         `INSERT INTO comments (username, comment, image_id)
             VALUES($1, $2, $3)
-            RETURNING id;`,
+            RETURNING *;`,
         [obj.username, obj.comment, obj.image_id]
     );
 };

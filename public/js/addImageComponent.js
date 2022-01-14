@@ -49,7 +49,6 @@ export const addImageComponent = {
                 } else if (!this.url && !this.file) {
                     return (this.notempty = true);
                 }
-                //cherche si le url fini par jpe ou jp
                 if (
                     !this.url.toLowerCase().endsWith("jpe") ||
                     !this.url.toLowerCase().endsWith("jpg")

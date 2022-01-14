@@ -46,8 +46,7 @@ export const getImageComponent = {
             history.pushState({}, "", "/" + imageId);
             this.selectedImageId = imageId;
         },
-        handleClose(invalid = false) {
-            // remove image id from browser url
+        handleClose(invalid = false, deleteImage = false) {
             if (!invalid) {
                 // navigate to URL WITH adding an entry to the browser history
                 history.pushState({}, "", "/");
@@ -55,10 +54,27 @@ export const getImageComponent = {
                 // navigate to URL WITHOUT adding an entry to the browser history
                 history.replaceState({}, "", "/");
             }
+            if (deleteImage) {
+                let position = 0;
+                for (const i in this.images) {
+                    console.log(i);
+                    if (this.images[i].id === this.selectedImageId) {
+                        position = i;
+                        break;
+                    }
+                }
+                this.images.splice(position, 1);
+                if (this.images.length <= 2) {
+                    this.loadMoreImages();
+                }
+            }
 
             this.selectedImageId = null;
         },
         loadMoreImage() {
+            this.loadMoreImages();
+        },
+        loadMoreImages() {
             // id of the last image the user currently sees on screen
             const lastId = this.images[this.images.length - 1].id;
 
@@ -73,7 +89,6 @@ export const getImageComponent = {
                     this.loadMoreButton(nextImages);
                 });
         },
-
         loadMoreButton(data) {
             if (data[data.length - 1].id === data[data.length - 1].lowestid) {
                 this.loadMore = false;
