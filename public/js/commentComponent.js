@@ -1,3 +1,4 @@
+import { moreCommentsComponent } from "./moreCommentsComponent.js";
 export const commentComponent = {
     props: ["id"],
     template: `
@@ -11,19 +12,22 @@ export const commentComponent = {
             <input type="text" name="username" v-model="username" placeholder="username">
             <button @click="handleClick">Submit</button>
             <div id="allComments">
-                <li v-for="comment in comments" v-if="comments.length">
+                <li v-for="comment in comments" v-if="comments.length" @click="clickComment(comment.id)">
                     {{comment.username}} has wrote "{{comment.comment}}" on {{new Date(comment.created_at).getDate()}}/{{(new Date(comment.created_at).getMonth() + 1).toString().padStart(2, "0")}}/{{new Date(comment.created_at).getFullYear()}} 
                     at {{new Date(comment.created_at).getHours()}}:{{new Date(comment.created_at).getMinutes().toString().padStart(2, "0")}}
                 </li>
                 <p v-else> not comment </p>
             </div>
         </div>
+        <more-comments-component @close="handleClose" :id="selectedCommentId" v-if="selectedCommentId"></more-comments-component>
+
     `,
     data() {
         return {
             comment: "",
             username: "",
             comments: [],
+            selectedCommentId: null,
         };
     },
     mounted() {
@@ -65,5 +69,13 @@ export const commentComponent = {
                     });
             }
         },
+        clickComment(id) {
+            console.log("user click on comments", id);
+            this.selectedCommentId = id;
+        },
+        handleClose() {
+            this.selectedCommentId = null;
+        },
     },
+    components: { "more-comments-component": moreCommentsComponent },
 };

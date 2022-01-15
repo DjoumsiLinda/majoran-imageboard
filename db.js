@@ -13,6 +13,7 @@ if (!connetionString) {
 
 const db = spicedPg(connetionString);
 
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++image
 module.exports.getImages = () => {
     return db.query(`
         SELECT *, (
@@ -45,6 +46,7 @@ module.exports.getImagesAfter = function (after) {
     );
 };
 
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ comments
 module.exports.addcomment = (obj) => {
     return db.query(
         `INSERT INTO comments (username, comment, image_id)
@@ -60,4 +62,18 @@ module.exports.getCommentsWithId = (id) => {
 
 module.exports.deleteComment = (id) => {
     return db.query(`DELETE FROM comments where image_id = $1;`, [id]);
+};
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++morecomment
+module.exports.addmorecomment = (obj) => {
+    return db.query(
+        `INSERT INTO morecomments (username, comment, comment_id)
+            VALUES($1, $2, $3)
+            RETURNING *;`,
+        [obj.username, obj.comment, obj.comment_id]
+    );
+};
+
+module.exports.deletemoreComment = (id) => {
+    return db.query(`DELETE FROM morecomments where comment_id = $1;`, [id]);
 };

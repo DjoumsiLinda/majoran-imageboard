@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS morecomments;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS images;
 
@@ -115,4 +116,19 @@ INSERT INTO comments (username, comment, image_id) VALUES (
     'Linda test',
     'very good',
     12
+);
+
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ morecomments table*/
+CREATE TABLE morecomments(
+    id SERIAL PRIMARY KEY,
+    username VARCHAR NOT NULL,
+    comment VARCHAR NOT NULL,
+    comment_id INTEGER NOT NULL REFERENCES comments(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO morecomments (username, comment, comment_id) VALUES (
+    'Linda test',
+    'very good',
+    1
 );

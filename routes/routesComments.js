@@ -24,4 +24,18 @@ router.get("/comments/:id*", (req, res) => {
             res.sendStatus(500);
         });
 });
+
+router.post("/morecomment", (req, res) => {
+    db.addmorecomment(req.body)
+        .then((result) => {
+            if (result.rows[0].id) {
+                console.log(result.rows);
+                res.json(result.rows);
+            }
+        })
+        .catch((e) => {
+            console.log(e);
+            res.sendStatus(500);
+        });
+});
 module.exports = router;

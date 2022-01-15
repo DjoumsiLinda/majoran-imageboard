@@ -1,0 +1,49 @@
+.moreComment {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 99, 0, 0.2);
+    font-size: 35px;
+}
+#getComment {
+    width: 60%;
+    height: 60%;
+    background-color: white;
+    margin-top: 10%;
+    margin-left: 25%;
+}
+#morecommentbtx {
+    margin-top: -43%;
+    text-align: right;
+    margin-left: 27%;
+    margin-right: 15%;
+}
+#morecommentbtx button {
+    cursor: pointer;
+    background-color: transparent;
+    border: 0px;
+    margin-top: 0;
+    text-align: left;
+}
+#addComments {
+    margin: 5%;
+    text-align: left;
+    background-color: yellow;
+    width: 90%;
+    height: 100%;
+    overflow-y: scroll;
+    font-size: 25px;
+}
+#addComments p {
+    margin-left: 10px;
+}
+#inputMoreComment #more {
+    background-color: white;
+    height: 30px;
+    width: 250px;
+    margin-left: 10px;
+    margin-top: -200px;
+    margin-right: -5px;
+}
