@@ -7,6 +7,11 @@ server.use((req, res, next) => {
     console.log("📢", req.method, req.url);
     next();
 });
+server.use(
+    express.urlencoded({
+        extended: false,
+    })
+);
 
 server.use(express.static("./uploads"));
 server.use(express.static("./public"));
@@ -19,8 +24,8 @@ server.get("*", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 });
 
-server.listen(process.env.PORT || 8083, () =>
-    console.log(`I'm listening. http://localhost:8083`)
+server.listen(process.env.PORT || 8080, () =>
+    console.log(`I'm listening. http://localhost:8080`)
 );
 
 //git remote add heroku https://git.heroku.com/einfuegenimageboards.git

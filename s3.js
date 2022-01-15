@@ -16,26 +16,30 @@ const s3 = new aws.S3({
 });
 
 module.exports.s3Uploader = (req, res, next) => {
-    const { filename, mimetype, size, path } = req.file;
-
-    s3.putObject({
-        Bucket: "spicedling",
-        ACL: "public-read",
-        Key: filename,
-        Body: fs.createReadStream(path),
-        ContentType: mimetype,
-        ContentLength: size,
-    })
-        .promise()
-        .then(() => {
-            console.log("Upload successfull");
-            unlink(path);
-            next();
+    if (req.file) {
+        const { filename, mimetype, size, path } = req.file;
+        s3.putObject({
+            Bucket: "spicedling",
+            ACL: "public-read",
+            Key: filename,
+            Body: fs.createReadStream(path),
+            ContentType: mimetype,
+            ContentLength: size,
         })
-        .catch((err) => {
-            console.log(err);
-            res.sendStatus(500);
-        });
+            .promise()
+            .then(() => {
+                console.log("Upload successfull");
+                unlink(path);
+                next();
+            })
+            .catch((err) => {
+                console.log(err);
+                res.sendStatus(500);
+            });
+    } else {
+        console.log("ich bin a File");
+        next();
+    }
 };
 
 module.exports.s3deleteUrl = (req, res, next) => {

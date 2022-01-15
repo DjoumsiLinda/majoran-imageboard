@@ -45,43 +45,81 @@ export const addImageComponent = {
             e.preventDefault();
             if (this.title && this.username) {
                 if (this.url && this.file) {
-                    return (this.notboth = true);
+                    this.leerVariable();
+                    this.notboth = true;
+                    return;
                 } else if (!this.url && !this.file) {
-                    return (this.notempty = true);
+                    this.leerVariable();
+                    this.notempty = true;
+                    return;
                 }
                 if (
                     !this.url.toLowerCase().endsWith("jpe") &&
-                    !this.url.toLowerCase().endsWith("jpg")
+                    !this.url.toLowerCase().endsWith("jpg") &&
+                    !this.file
                 ) {
-                    console.log(
-                        "Not jpe and not Jpg",
-                        this.url.toLowerCase().endsWith("jpg")
-                    );
-                    return (this.urlfehler = true);
+                    this.leerVariable();
+                    this.urlfehler = true;
+                    return;
                 }
                 const formData = new FormData();
                 formData.append("username", this.username);
                 formData.append("title", this.title);
                 formData.append("description", this.description);
-                formData.append("file", this.file);
-                formData.append("url", this.url);
-
-                fetch("/images", { method: "POST", body: formData })
-                    .then((res) => {
-                        return res.json();
-                    })
-                    .then((data) => {
-                        if ("status" in data) {
-                            this.urlfehler = true;
-                        } else {
-                            this.$emit("addnewimage", data);
-                        }
-                    });
+                if (this.url) {
+                    formData.append("url", this.url);
+                    fetch("/images/url", { method: "POST", body: formData })
+                        .then((res) => {
+                            return res.json();
+                        })
+                        .then((data) => {
+                            if ("status" in data) {
+                                if (!this.url) {
+                                    this.urlfehler = true;
+                                }
+                            } else {
+                                this.$emit("addnewimage", data);
+                                this.leerVariable();
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                } else if (this.file) {
+                    formData.append("file", this.file);
+                    fetch("/images/file", { method: "POST", body: formData })
+                        .then((res) => {
+                            return res.json();
+                        })
+                        .then((data) => {
+                            if ("status" in data) {
+                                if (!this.url) {
+                                    this.urlfehler = true;
+                                }
+                            } else {
+                                this.$emit("addnewimage", data);
+                                this.leerVariable();
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                }
             }
         },
         addFile(e) {
             e.preventDefault();
             this.file = e.target.files[0];
+        },
+        leerVariable() {
+            this.title = "";
+            this.description = "";
+            this.username = "";
+            this.file = "";
+            this.url = "";
+            this.notboth = false;
+            this.notempty = false;
+            this.urlfehler = false;
         },
     },
 };

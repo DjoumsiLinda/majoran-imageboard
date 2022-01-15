@@ -11,7 +11,6 @@ Vue.createApp({
             this.images = data;
         },
         addnewimage(data) {
-            console.log(data);
             this.images.unshift(data);
         },
     },

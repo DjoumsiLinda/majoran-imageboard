@@ -9,7 +9,7 @@ const { urlRequest } = require("../public/js/urlRequest.js");
 
 const diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, path.join(__dirname, "uploads"));
+        callback(null, path.join(__dirname, "../uploads"));
     },
     filename: function (req, file, callback) {
         uidSafe(24).then((uid) => {
@@ -80,9 +80,30 @@ router.get("/delete/:id*", s3.s3deleteUrl, (req, res) => {
 });
 //uploader ist ein Middleware
 router.post(
-    "/images",
+    "/images/file",
     uploader.single("file"),
-    /*s3.s3Uploader,*/ (req, res) => {
+    s3.s3Uploader,
+    (req, res) => {
+        const obj = {
+            title: req.body.title,
+            url: null,
+            description: req.body.description,
+            username: req.body.username,
+        };
+        if (req.file.filename) {
+            console.log("POST IMAGES", req.file.filename);
+            obj.url =
+                "https://spicedling.s3.amazonaws.com/" + req.file.filename;
+            addImage(obj, res);
+        }
+    }
+);
+
+router.post(
+    "/images/url",
+    uploader.single("file"),
+    s3.s3Uploader,
+    (req, res) => {
         const obj = {
             title: req.body.title,
             url: null,
@@ -90,6 +111,7 @@ router.post(
             username: req.body.username,
         };
         if (req.body.url) {
+            console.log("POST IMAGES", req.body.url);
             urlRequest(req.body.url).then((status) => {
                 if (status !== 200) {
                     res.json({ status: status });
@@ -98,10 +120,6 @@ router.post(
                     addImage(obj, res);
                 }
             });
-        } else if (req.file.filename) {
-            obj.url =
-                /*"https://spicedling.s3.amazonaws.com/"+*/ req.file.filename;
-            addImage(obj, res);
         }
     }
 );
