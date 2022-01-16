@@ -74,6 +74,10 @@ module.exports.addmorecomment = (obj) => {
     );
 };
 
+module.exports.getmoreCommentsWithId = (id) => {
+    return db.query(`SELECT * FROM morecomments where comment_id = $1;`, [id]);
+};
+
 module.exports.deletemoreComment = (id) => {
     return db.query(`DELETE FROM morecomments where comment_id = $1;`, [id]);
 };

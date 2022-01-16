@@ -12,22 +12,32 @@ export const commentComponent = {
             <input type="text" name="username" v-model="username" placeholder="username">
             <button @click="handleClick">Submit</button>
             <div id="allComments">
-                <li v-for="comment in comments" v-if="comments.length" @click="clickComment(comment.id)">
+                <li v-for="comment in comments" v-if="comments.length" @click="clickComment(comment.id, comment.comment, comment.username, comment.created_at)">
                     {{comment.username}} has wrote "{{comment.comment}}" on {{new Date(comment.created_at).getDate()}}/{{(new Date(comment.created_at).getMonth() + 1).toString().padStart(2, "0")}}/{{new Date(comment.created_at).getFullYear()}} 
                     at {{new Date(comment.created_at).getHours()}}:{{new Date(comment.created_at).getMinutes().toString().padStart(2, "0")}}
+                    <div id="allmoreComments">
+                        <li v-for="allcomment in moreComments">
+                            {{allcomment.username}}: "{{allcomment.comment}}" on {{new Date(allcomment.created_at).getDate()}}/{{(new Date(allcomment.created_at).getMonth() + 1).toString().padStart(2, "0")}}/{{new Date(allcomment.created_at).getFullYear()}} 
+                            at {{new Date(allcomment.created_at).getHours()}}:{{new Date(allcomment.created_at).getMinutes().toString().padStart(2, "0")}}
+                        </li>
+                </div>
                 </li>
                 <p v-else> not comment </p>
             </div>
         </div>
-        <more-comments-component @close="handleClose" :id="selectedCommentId" v-if="selectedCommentId"></more-comments-component>
+        <more-comments-component @close="handleClose" :selectedDatum="selectedDatum" :selectedUsername="selectedUsername" :selectedcomment="selectedComment" :id="selectedCommentId" v-if="selectedCommentId"></more-comments-component>
 
     `,
     data() {
         return {
             comment: "",
             username: "",
+            moreComments: [],
             comments: [],
+            selectedComment: null,
             selectedCommentId: null,
+            selectedUsername: null,
+            selectedDatum: null,
         };
     },
     mounted() {
@@ -38,7 +48,9 @@ export const commentComponent = {
             })
             .then((data) => {
                 if (data) {
-                    this.comments = data;
+                    console.log(this.id, data);
+                    this.comments = data.comment;
+                    this.moreComments = data.moreComment;
                 }
             });
     },
@@ -69,12 +81,18 @@ export const commentComponent = {
                     });
             }
         },
-        clickComment(id) {
-            console.log("user click on comments", id);
+        clickComment(id, comment, username, datum) {
+            console.log("user click on comments", id, username);
+            this.selectedUsername = username;
+            this.selectedDatum = datum;
             this.selectedCommentId = id;
+            this.selectedComment = comment;
         },
-        handleClose() {
+        handleClose(data) {
             this.selectedCommentId = null;
+            for (let i = 0; i < data.length; i++) {
+                this.moreComments.push(data[i]);
+            }
         },
     },
     components: { "more-comments-component": moreCommentsComponent },

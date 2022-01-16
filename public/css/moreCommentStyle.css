@@ -15,17 +15,13 @@
     margin-left: 25%;
 }
 #morecommentbtx {
-    margin-top: -43%;
-    text-align: right;
-    margin-left: 27%;
-    margin-right: 15%;
+    position: fixed;
+    margin-top: -10%;
+    margin-left: 47%;
 }
 #morecommentbtx button {
     cursor: pointer;
-    background-color: transparent;
-    border: 0px;
-    margin-top: 0;
-    text-align: left;
+    border: 3px solid black;
 }
 #addComments {
     margin: 5%;
@@ -38,12 +34,26 @@
 }
 #addComments p {
     margin-left: 10px;
+    font-style: italic;
 }
 #inputMoreComment #more {
     background-color: white;
+    height: 70px;
+    margin: 25px;
+    margin-bottom: -5px;
+}
+#inputMoreComment #name {
+    cursor: pointer;
+    background-color: white;
+    border: 3px solid black;
+    display: block;
+    width: 30%;
     height: 30px;
-    width: 250px;
-    margin-left: 10px;
-    margin-top: -200px;
-    margin-right: -5px;
+    margin: 25px;
+    margin-bottom: -5px;
+}
+#inputMoreComment button {
+    cursor: pointer;
+    margin-left: 25px;
+    margin-top: 30px;
 }
