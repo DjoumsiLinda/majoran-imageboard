@@ -99,7 +99,6 @@ router.post(
             username: req.body.username,
         };
         if (req.file.filename) {
-            console.log("POST IMAGES", req.file.filename);
             obj.url =
                 "https://spicedling.s3.amazonaws.com/" + req.file.filename;
             addImage(obj, res);
@@ -119,7 +118,6 @@ router.post(
             username: req.body.username,
         };
         if (req.body.url) {
-            console.log("POST IMAGES", req.body.url);
             urlRequest(req.body.url).then((status) => {
                 if (status !== 200) {
                     res.json({ status: status });

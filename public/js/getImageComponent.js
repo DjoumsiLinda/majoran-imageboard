@@ -41,8 +41,6 @@ export const getImageComponent = {
     },
     methods: {
         handleselectedId(imageId) {
-            // add image id to browser url
-            console.log("You are click on:", imageId);
             history.pushState({}, "", "/" + imageId);
             this.selectedImageId = imageId;
         },
@@ -57,7 +55,6 @@ export const getImageComponent = {
             if (deleteImage) {
                 let position = 0;
                 for (const i in this.images) {
-                    console.log(i);
                     if (this.images[i].id === this.selectedImageId) {
                         position = i;
                         break;

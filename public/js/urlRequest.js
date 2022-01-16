@@ -4,7 +4,7 @@ module.exports.urlRequest = function (url) {
 
     return new Promise((resolve) => {
         https.get(url, (res) => {
-            console.log(` Code: ${res.statusCode}`);
+            //console.log(` Code: ${res.statusCode}`);
             resolve(res.statusCode);
         });
     });

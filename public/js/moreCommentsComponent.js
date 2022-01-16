@@ -41,15 +41,12 @@ export const moreCommentsComponent = {
             })
             .then((data) => {
                 if (data) {
-                    //a envoyer au parent
                     this.allComments = data;
                 }
             });
     },
     methods: {
         addMoreComment() {
-            console.log(this.moreComments);
-            //fetch pour ajouter le nveau commentaire a la db
             let newComment = {
                 comment: this.moreComments,
                 username: this.username,
@@ -66,7 +63,6 @@ export const moreCommentsComponent = {
                     return res.json();
                 })
                 .then((data) => {
-                    console.log(data[0]);
                     this.allComments.push(data[0]);
                     this.tosend.push(data[0]);
                     this.moreComments = "";

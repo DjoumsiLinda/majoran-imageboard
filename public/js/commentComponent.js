@@ -78,7 +78,6 @@ export const commentComponent = {
     methods: {
         handleClick() {
             if (this.comment && this.username) {
-                console.log("Click on submit", this.comment, this.username);
                 let newComment = {
                     comment: this.comment,
                     username: this.username,
@@ -106,7 +105,6 @@ export const commentComponent = {
             }
         },
         clickComment(id, comment, username, datum) {
-            console.log("user click on comments", id, username);
             this.selectedUsername = username;
             this.selectedDatum = datum;
             this.selectedCommentId = id;

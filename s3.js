@@ -46,9 +46,9 @@ module.exports.s3deleteUrl = (req, res, next) => {
     db.getImageWithId(req.params.id)
         .then((results) => {
             var params = { Bucket: "spicedling", Key: results.rows[0].url };
-            s3.deleteObject(params, function (err, data) {
-                if (err) console.log(err, err.stack);
-                else console.log("succefull delete in s3", data);
+            s3.deleteObject(params, function (err) {
+                if (err) console.log("s3", err, err.stack);
+                //else console.log("succefull delete in s3", data);
                 next();
             });
         })
