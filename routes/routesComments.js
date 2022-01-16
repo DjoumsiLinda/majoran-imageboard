@@ -15,33 +15,43 @@ router.post("/comment", (req, res) => {
         });
 });
 router.get("/comments/:id*", (req, res) => {
-    const obj = {
-        comment: null,
-        moreComment: null,
-    };
     db.getCommentsWithId(req.params.id)
-        .then((results) => {
-            obj.comment = results.rows;
-            db.getCommentsWithId(req.params.id)
-                .then((comment) => {
-                    if (comment.rows[0].id) {
-                        db.getmoreCommentsWithId(comment.rows[0].id)
+        .then((comment) => {
+            res.json(comment.rows);
+            /* if (comment.rows) {
+                const ar = comment.rows;
+                for (const i in ar) {
+                    if (ar[i].id) {
+                        db.getmoreCommentsWithId(ar[i].id)
                             .then((morecomment) => {
+                                console.log(
+                                    "ylösöldöm",
+                                    ar[i].id,
+                                    morecomment.rows
+                                );
                                 if (morecomment.rows) {
-                                    obj.moreComment = morecomment.rows;
+                                    obj.moreComment.push(morecomment.rows);
                                 }
-                                res.json(obj);
                             })
                             .catch((e) => {
                                 console.log(e);
                                 res.sendStatus(500);
                             });
                     }
-                })
-                .catch((e) => {
-                    console.log(e);
-                    res.sendStatus(500);
-                });
+                }
+            }*/
+        })
+        .catch((e) => {
+            console.log(e);
+            res.sendStatus(500);
+        });
+});
+router.get("/moreArraycomments/:id*", (req, res) => {
+    db.getmoreCommentsWithId(req.params.id)
+        .then((morecomment) => {
+            if (morecomment.rows) {
+                res.json(morecomment.rows);
+            }
         })
         .catch((e) => {
             console.log(e);

@@ -32,7 +32,7 @@
 }
 .commentcom #allComments > li {
     margin-top: 20px;
-    margin-left: 20px;
+    margin-left: 30px;
 }
 .commentcom #allComments > p {
     font-size: 40px;
@@ -43,5 +43,5 @@
 }
 #allmoreComments {
     font-size: 15px;
-    margin-left: 20px;
+    margin-left: 30px;
 }

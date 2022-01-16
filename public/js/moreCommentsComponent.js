@@ -75,6 +75,7 @@ export const moreCommentsComponent = {
         },
         handleClick() {
             this.$emit("close", this.tosend);
+            //alert("a new comment has been added, refresh the browser");
         },
     },
 };

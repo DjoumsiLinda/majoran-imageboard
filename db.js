@@ -79,5 +79,8 @@ module.exports.getmoreCommentsWithId = (id) => {
 };
 
 module.exports.deletemoreComment = (id) => {
-    return db.query(`DELETE FROM morecomments where comment_id = $1;`, [id]);
+    return db.query(
+        `DELETE FROM morecomments where comment_id in (SELECT id FROM comments where image_id = $1);`,
+        [id]
+    );
 };

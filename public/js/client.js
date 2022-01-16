@@ -12,6 +12,8 @@ Vue.createApp({
         },
         addnewimage(data) {
             this.images.unshift(data);
+            //alert("a new image has been added, refresh the browser");
+            //window.location.reload();
         },
     },
     components: {

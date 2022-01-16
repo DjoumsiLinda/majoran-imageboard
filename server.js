@@ -24,8 +24,9 @@ server.get("*", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 });
 
-server.listen(process.env.PORT || 8080, () =>
-    console.log(`I'm listening. http://localhost:8080`)
+server.listen(process.env.PORT || 7002, () =>
+    console.log(`I'm listening. http://localhost:7002`)
 );
 
+//https://s3.amazonaws.com/imageboard/jAVZmnxnZ-U95ap2-PLliFFF7TO0KqZm.jpg
 //git remote add heroku https://git.heroku.com/einfuegenimageboards.git

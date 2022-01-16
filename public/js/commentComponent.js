@@ -12,15 +12,16 @@ export const commentComponent = {
             <input type="text" name="username" v-model="username" placeholder="username">
             <button @click="handleClick">Submit</button>
             <div id="allComments">
-                <li v-for="comment in comments" v-if="comments.length" @click="clickComment(comment.id, comment.comment, comment.username, comment.created_at)">
+                <p v-if="comments.length"> Nicht Vollständig</p>
+                <li v-for="(comment, index) in comments" v-if="comments.length" @click="clickComment(comment.id, comment.comment, comment.username, comment.created_at)">
                     {{comment.username}} has wrote "{{comment.comment}}" on {{new Date(comment.created_at).getDate()}}/{{(new Date(comment.created_at).getMonth() + 1).toString().padStart(2, "0")}}/{{new Date(comment.created_at).getFullYear()}} 
                     at {{new Date(comment.created_at).getHours()}}:{{new Date(comment.created_at).getMinutes().toString().padStart(2, "0")}}
                     <div id="allmoreComments">
-                        <li v-for="allcomment in moreComments">
+                        <li :v-if="allcomment.username" v-for="allcomment in moreComments">
                             {{allcomment.username}}: "{{allcomment.comment}}" on {{new Date(allcomment.created_at).getDate()}}/{{(new Date(allcomment.created_at).getMonth() + 1).toString().padStart(2, "0")}}/{{new Date(allcomment.created_at).getFullYear()}} 
                             at {{new Date(allcomment.created_at).getHours()}}:{{new Date(allcomment.created_at).getMinutes().toString().padStart(2, "0")}}
                         </li>
-                </div>
+                    </div>
                 </li>
                 <p v-else> not comment </p>
             </div>
@@ -38,6 +39,7 @@ export const commentComponent = {
             selectedCommentId: null,
             selectedUsername: null,
             selectedDatum: null,
+            objComments: [],
         };
     },
     mounted() {
@@ -49,8 +51,27 @@ export const commentComponent = {
             .then((data) => {
                 if (data) {
                     console.log(this.id, data);
-                    this.comments = data.comment;
-                    this.moreComments = data.moreComment;
+                    this.comments = data;
+                    for (let i = 0; i < this.comments.length; i++) {
+                        if (this.comments[i].id) {
+                            const path2 =
+                                "/moreArraycomments/" + this.comments[i].id;
+                            fetch(path2)
+                                .then((res) => {
+                                    return res.json();
+                                })
+                                .then((data) => {
+                                    if (data[0]) {
+                                        this.moreComments.push(data[0]);
+                                    }
+                                    const com = [];
+                                    com.push(this.comments[i]);
+                                    com.push(data[0]);
+                                    this.objComments.push(com);
+                                });
+                        }
+                    }
+                    console.log("++++++++++", this.objComments);
                 }
             });
     },
@@ -76,6 +97,9 @@ export const commentComponent = {
                     })
                     .then((data) => {
                         this.comments.unshift(data[0]);
+                        /*alert(
+                            "a new comment has been added, refresh the browser"
+                        );*/
                         this.comment = "";
                         this.username = "";
                     });

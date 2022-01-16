@@ -58,15 +58,23 @@ router.get("/images/:id*", (req, res) => {
         });
 });
 router.get("/delete/:id*", s3.s3deleteUrl, (req, res) => {
-    //delete comments
-    db.deleteComment(req.params.id)
+    //delete morecomment
+    db.deletemoreComment(req.params.id)
         .then(() => {
-            //delete images
-            db.deleteImage(req.params.id)
-                .then((results) => {
-                    if (results.rowCount) {
-                        res.json(results.rowCount);
-                    }
+            //delete comments
+            db.deleteComment(req.params.id)
+                .then(() => {
+                    //delete images
+                    db.deleteImage(req.params.id)
+                        .then((results) => {
+                            if (results.rowCount) {
+                                res.json(results.rowCount);
+                            }
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                            res.sendStatus(500);
+                        });
                 })
                 .catch((e) => {
                     console.log(e);

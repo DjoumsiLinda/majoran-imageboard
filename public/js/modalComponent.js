@@ -62,6 +62,7 @@ export const modalComponent = {
                 .then((rowCount) => {
                     console.log("Image succeffulL Delete:", rowCount);
                     this.$emit("close", true, true);
+                    //alert("a new image has been deleted, refresh the browser");
                 });
         },
     },
