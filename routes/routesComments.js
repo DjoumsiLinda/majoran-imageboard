@@ -12,38 +12,18 @@ router.post("/comment", (req, res) => {
         .catch((e) => {
             console.log(e);
             res.sendStatus(500);
+            res.sendFile(`${__dirname}/error.html`);
         });
 });
 router.get("/comments/:id*", (req, res) => {
     db.getCommentsWithId(req.params.id)
         .then((comment) => {
             res.json(comment.rows);
-            /* if (comment.rows) {
-                const ar = comment.rows;
-                for (const i in ar) {
-                    if (ar[i].id) {
-                        db.getmoreCommentsWithId(ar[i].id)
-                            .then((morecomment) => {
-                                console.log(
-                                    "ylösöldöm",
-                                    ar[i].id,
-                                    morecomment.rows
-                                );
-                                if (morecomment.rows) {
-                                    obj.moreComment.push(morecomment.rows);
-                                }
-                            })
-                            .catch((e) => {
-                                console.log(e);
-                                res.sendStatus(500);
-                            });
-                    }
-                }
-            }*/
         })
         .catch((e) => {
             console.log(e);
             res.sendStatus(500);
+            res.sendFile(`${__dirname}/error.html`);
         });
 });
 router.get("/moreArraycomments/:id*", (req, res) => {
@@ -56,6 +36,7 @@ router.get("/moreArraycomments/:id*", (req, res) => {
         .catch((e) => {
             console.log(e);
             res.sendStatus(500);
+            res.sendFile(`${__dirname}/error.html`);
         });
 });
 
@@ -69,6 +50,7 @@ router.post("/morecomment", (req, res) => {
         .catch((e) => {
             console.log(e);
             res.sendStatus(500);
+            res.sendFile(`${__dirname}/error.html`);
         });
 });
 router.get("/morecomments/:id*", (req, res) => {
@@ -79,6 +61,7 @@ router.get("/morecomments/:id*", (req, res) => {
         .catch((e) => {
             console.log(e);
             res.sendStatus(500);
+            res.sendFile(`${__dirname}/error.html`);
         });
 });
 module.exports = router;

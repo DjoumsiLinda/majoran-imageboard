@@ -11,7 +11,8 @@ export const getImageComponent = {
             <div id="imageboards">
                 <div v-for="image in images" id="imageboard" @click="handleselectedId(image.id)">
                         <img :src="image.url">
-                    <p id="title">{{image.title}}</p>    
+                    <p id="title">{{image.title}}</p> 
+                    <p id="description" v-if="image.description"> {{image.description}} </p>   
                 </div>   
             </div>  
             <div id="cen">

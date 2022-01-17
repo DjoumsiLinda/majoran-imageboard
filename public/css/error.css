@@ -1,0 +1,15 @@
+body {
+    background-color: chocolate;
+}
+#error {
+    font-size: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+h1 {
+    margin-top: 10%;
+    margin-bottom: -1%;
+    color: black;
+}

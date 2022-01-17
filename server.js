@@ -2,17 +2,11 @@ const express = require("express");
 const server = express();
 const routesImages = require("./routes/routesImages.js");
 const routesComments = require("./routes/routesComments.js");
-
 server.use((req, res, next) => {
     console.log("📢", req.method, req.url);
+
     next();
 });
-server.use(
-    express.urlencoded({
-        extended: false,
-    })
-);
-
 server.use(express.static("./uploads"));
 server.use(express.static("./public"));
 

@@ -12,12 +12,11 @@ export const commentComponent = {
             <input type="text" name="username" v-model="username" placeholder="username">
             <button @click="handleClick">Submit</button>
             <div id="allComments">
-                <p v-if="comments.length"> Nicht Vollständig</p>
-                <li v-for="(comment, index) in comments" v-if="comments.length" @click="clickComment(comment.id, comment.comment, comment.username, comment.created_at)">
+                <li v-for=" comment in comments" v-if="comments.length" @click="clickComment(comment.id, comment.comment, comment.username, comment.created_at)">
                     {{comment.username}} has wrote "{{comment.comment}}" on {{new Date(comment.created_at).getDate()}}/{{(new Date(comment.created_at).getMonth() + 1).toString().padStart(2, "0")}}/{{new Date(comment.created_at).getFullYear()}} 
                     at {{new Date(comment.created_at).getHours()}}:{{new Date(comment.created_at).getMinutes().toString().padStart(2, "0")}}
                     <div id="allmoreComments">
-                        <li :v-if="allcomment.username" v-for="allcomment in moreComments">
+                        <li :v-if="allcomment.username" v-for="allcomment in filteredComments(comment.id)">
                             {{allcomment.username}}: "{{allcomment.comment}}" on {{new Date(allcomment.created_at).getDate()}}/{{(new Date(allcomment.created_at).getMonth() + 1).toString().padStart(2, "0")}}/{{new Date(allcomment.created_at).getFullYear()}} 
                             at {{new Date(allcomment.created_at).getHours()}}:{{new Date(allcomment.created_at).getMinutes().toString().padStart(2, "0")}}
                         </li>
@@ -39,7 +38,6 @@ export const commentComponent = {
             selectedCommentId: null,
             selectedUsername: null,
             selectedDatum: null,
-            objComments: [],
         };
     },
     mounted() {
@@ -61,17 +59,12 @@ export const commentComponent = {
                                     return res.json();
                                 })
                                 .then((data) => {
-                                    if (data[0]) {
-                                        this.moreComments.push(data[0]);
+                                    if (data.length) {
+                                        this.moreComments.push(...data);
                                     }
-                                    const com = [];
-                                    com.push(this.comments[i]);
-                                    com.push(data[0]);
-                                    this.objComments.push(com);
                                 });
                         }
                     }
-                    console.log("++++++++++", this.objComments);
                 }
             });
     },
@@ -83,7 +76,6 @@ export const commentComponent = {
                     username: this.username,
                     image_id: this.id,
                 };
-                //insert new comment
                 fetch("/comment", {
                     method: "POST",
                     headers: {
@@ -115,6 +107,9 @@ export const commentComponent = {
             for (let i = 0; i < data.length; i++) {
                 this.moreComments.push(data[i]);
             }
+        },
+        filteredComments(id) {
+            return this.moreComments.filter((c) => id === c.comment_id);
         },
     },
     components: { "more-comments-component": moreCommentsComponent },

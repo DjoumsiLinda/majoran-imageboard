@@ -33,6 +33,7 @@ router.get("/images", (req, res) => {
         .catch((e) => {
             console.log(e);
             res.sendStatus(500);
+            res.sendFile(`${__dirname}/error.html`);
         });
 });
 
@@ -44,6 +45,7 @@ router.get("/images/more", (req, res) => {
         .catch((e) => {
             console.log(e);
             res.sendStatus(500);
+            res.sendFile(`${__dirname}/error.html`);
         });
 });
 
@@ -55,6 +57,7 @@ router.get("/images/:id*", (req, res) => {
         .catch((e) => {
             console.log(e);
             res.sendStatus(500);
+            res.sendFile(`${__dirname}/error.html`);
         });
 });
 router.get("/delete/:id*", s3.s3deleteUrl, (req, res) => {
@@ -74,16 +77,19 @@ router.get("/delete/:id*", s3.s3deleteUrl, (req, res) => {
                         .catch((e) => {
                             console.log(e);
                             res.sendStatus(500);
+                            res.sendFile(`${__dirname}/error.html`);
                         });
                 })
                 .catch((e) => {
                     console.log(e);
                     res.sendStatus(500);
+                    res.sendFile(`${__dirname}/error.html`);
                 });
         })
         .catch((e) => {
             console.log(e);
             res.sendStatus(500);
+            res.sendFile(`${__dirname}/error.html`);
         });
 });
 //uploader ist ein Middleware
@@ -140,6 +146,7 @@ function addImage(obj, res) {
         .catch((e) => {
             console.log(e);
             res.sendStatus(500);
+            res.sendFile(`${__dirname}/error.html`);
         });
 }
 module.exports = router;
